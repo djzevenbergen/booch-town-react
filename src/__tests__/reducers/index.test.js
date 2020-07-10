@@ -3,6 +3,8 @@ import { createStore } from 'redux';
 import formVisibleReducer from '../../reducers/form-visible-reducer';
 import kegListReducer from '../../reducers/keg-list-reducer';
 import editingReducer from '../../reducers/editing-reducer';
+import selectedKegReducer from '../../reducers/selected-keg-reducer';
+import * as c from '../../actions';
 
 let store = createStore(rootReducer);
 
@@ -59,6 +61,38 @@ describe("rootReducer", () => {
     }
     store.dispatch(action);
     expect(store.getState().editing).toEqual(editingReducer(undefined, action));
+  });
+
+  test('Check that initial state of kegListReducer matches root reducer', () => {
+    const currentState = {
+      1: {
+        name: "Red Berry Blaster",
+        brand: "Jim's Booches",
+        price: "4.00",
+        flavor: "cherry",
+        capacity: 124,
+        howMuchLeft: "Plenty-o-Booch",
+        id: 1
+      },
+      2: {
+
+        name: "Sour Silk",
+        brand: "Nature's Party-Planners",
+        price: "6.99",
+        flavor: "sour, lemon",
+        capacity: 9,
+        howMuchLeft: "Not Much",
+        id: 2
+      }
+    }
+
+    const action = c.selectKeg(2);
+
+    console.log(action);
+
+    store.dispatch(action);
+    expect(store.getState().selectedKeg).toEqual(rootReducer(currentState, action))
+    expect(store.getState().masterKegList).toEqual(rootReducer(currentState, action));
   });
 
 });
