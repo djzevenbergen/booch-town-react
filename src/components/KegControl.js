@@ -65,19 +65,25 @@ class KegControl extends React.Component {
 
       const { dispatch } = this.props;
       const action = c.toggleEditForm();
-      dispatch(action);
-      console.log("handle click" + action);
+      if (this.props.editing === true) {
+        dispatch(action);
+      }
+
+
       this.setState({
         selectedKeg: null
       });
 
-
     } else {
-
       const { dispatch } = this.props;
+      const action2 = c.toggleEditForm();
+      if (this.props.editing === true) {
+        dispatch(action2);
+      }
+      // 
       const action = c.toggleForm();
       dispatch(action);
-      console.log("else:" + action.type);
+      // console.log("else:" + action.type);
     }
   }
 
@@ -136,6 +142,9 @@ class KegControl extends React.Component {
     let buttonText = null;
 
     if (this.props.editing) {
+      console.log("editing this keg:" + this.state.selectedKeg);
+      console.log("editing = " + this.props.editing);
+      console.log("formVisible = " + this.props.formVisible);
       currentlyVisibleState = <EditKegForm keg={this.state.selectedKeg} onEditKeg={this.handleEditingKegInList} />
       buttonText = "Return to Keg List";
     }
