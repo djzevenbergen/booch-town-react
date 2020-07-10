@@ -1,6 +1,6 @@
 import * as c from '../../src/actions/ActionTypes';
 
-export default (state = "", action) => {
+export default (state = null, action) => {
   const { id } = action;
   switch (action.type) {
     case c.SELECT_KEG:
@@ -11,7 +11,8 @@ export default (state = "", action) => {
       return selectedKeg;
     case c.DESELECT_KEG:
       console.log("hi");
-      const thisState = "";
+      console.log("hm");
+      const thisState = null;
       return thisState;
     default:
       return state;

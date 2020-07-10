@@ -32,4 +32,14 @@ describe('selectedKegReducer', () => {
     };
     expect(selectedKegReducer(currentState, action)).toEqual(1);
   });
+
+  test('Should successfully return id ""', () => {
+    const currentState = {
+      id: 1
+    }
+    action = {
+      type: c.DESELECT_KEG
+    };
+    expect(selectedKegReducer(currentState, action)).toEqual(null);
+  });
 });

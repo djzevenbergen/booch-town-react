@@ -22,11 +22,12 @@ class KegControl extends React.Component {
   }
 
   handleChangingSelectedKeg = (id) => {
-    const selectedKeg = Object.values(this.props.masterKegList).filter(keg => keg.id === id)[0];
-
+    const { dispatch } = this.props;
+    const action = c.selectKeg(id);
+    dispatch(action);
+    console.log("am i happening");
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    this.setState({ selectedKeg: selectedKeg });
   }
 
   handleAddingNewKegToList = (newKeg) => {
@@ -39,29 +40,9 @@ class KegControl extends React.Component {
 
   }
 
-  // handleClick = () => {
-  //   if (this.state.selectedKeg != null) {
-  //     this.setState({
-  //       formVisibleOnPage: false,
-  //       selectedKeg: null,
-  //       editing: false
-  //     });
-  //   } else if (this.props.formVisible === false) {
-  //     this.setState(prevState => ({
-  //       counter: prevState.counter + 1
-  //     }));
-  //   } else {
-  //     this.setState(prevState => ({
-  //       formVisibleOnPage: !prevState.formVisibleOnPage,
-  //       counter: 0
-  //     }));
-  //   }
-  // }
-
-
   handleClick = () => {
 
-    if (this.state.selectedKeg !== null) {
+    if (this.props.selectedKeg !== null) {
 
       const { dispatch } = this.props;
       const action = c.toggleEditForm();
@@ -69,12 +50,12 @@ class KegControl extends React.Component {
         dispatch(action);
       }
 
-
-      this.setState({
-        selectedKeg: null
-      });
+      const action2 = c.deselectKeg();
+      console.log(this.props.selectedKeg);
+      dispatch(action2);
 
     } else {
+      console.log('wtf');
       const { dispatch } = this.props;
       const action2 = c.toggleEditForm();
       if (this.props.editing === true) {
@@ -96,9 +77,8 @@ class KegControl extends React.Component {
     const action2 = c.toggleEditForm();
     dispatch(action2);
 
-    this.setState({
-      selectedKeg: null
-    });
+    const action3 = c.deselectKeg();
+    dispatch(action3);
   }
 
   handleEditClick = () => {
@@ -131,32 +111,42 @@ class KegControl extends React.Component {
     const action = c.deleteKeg(id);
     dispatch(action);
 
+    const action2 = c.deselectKeg();
+    dispatch(action2);
     //!!!!!!!!!!!!!!!!!!!!!!
-    this.setState({
-      selectedKeg: null
-    });
+    // this.setState({
+    //   selectedKeg: null
+    // });
   }
 
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
 
+    console.log("checking this id!" + this.props.selectedKeg);
+
+    const thisSelectedKeg = Object.values(this.props.masterKegList)
+      .filter(keg => keg.id === this.props.selectedKeg);
+
+    console.log("master list!!" + this.props.masterKegList);
     if (this.props.editing) {
-      console.log("editing this keg:" + this.state.selectedKeg);
+      console.log("editing this keg:" + thisSelectedKeg);
       console.log("editing = " + this.props.editing);
       console.log("formVisible = " + this.props.formVisible);
-      currentlyVisibleState = <EditKegForm keg={this.state.selectedKeg} onEditKeg={this.handleEditingKegInList} />
+
+
+      currentlyVisibleState = <EditKegForm keg={thisSelectedKeg} onEditKeg={this.handleEditingKegInList} />
       buttonText = "Return to Keg List";
     }
-    else if (this.state.selectedKeg != null) {
+    else if (this.props.selectedKeg != null) {
       currentlyVisibleState =
         <KegDetail
-          keg={this.state.selectedKeg}
+          keg={thisSelectedKeg}
           onClickingDelete={this.handleDeletingKeg}
           onClickingEdit={this.handleEditClick}
         />
       console.log(this.props.formVisible);
-      console.log(this.state.selectedKeg);
+      console.log(thisSelectedKeg);
       console.log(this.props.editing);
       buttonText = "Return to Keg List";
     } else if (this.props.formVisible === false) {
@@ -189,7 +179,7 @@ KegControl.propTypes = {
   masterKegList: PropTypes.object,
   formVisible: PropTypes.bool,
   editing: PropTypes.bool,
-  selectedKeg: PropTypes.object
+  selectedKeg: PropTypes.string
 }
 
 const mapStateToProps = state => {
@@ -197,7 +187,7 @@ const mapStateToProps = state => {
     masterKegList: state.masterKegList,
     formVisible: state.formVisible,
     editing: state.editing,
-    selectedKeg: state.masterKegList
+    selectedKeg: state.selectedKeg
   }
 }
 

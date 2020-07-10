@@ -21,6 +21,12 @@ export const selectKeg = (id) => ({
   id: id
 });
 
+export const deselectKeg = (id) => ({
+  type: 'DESELECT_KEG',
+  id: id
+});
+
+
 export const addKeg = (keg) => {
   const { name, brand, price, flavor, capacity, howMuchLeft, id } = keg;
   return {
