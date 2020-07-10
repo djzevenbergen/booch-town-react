@@ -45,7 +45,6 @@ const currentState = {
   }
 }
 
-
 describe('kegListReducer', () => {
   test('Should return default state if there is no action type passed into the reducer', () => {
     expect(kegListReducer({}, { type: null })).toEqual({});
@@ -108,7 +107,6 @@ describe('kegListReducer', () => {
     };
 
     expect(kegListReducer(currentState, action)).toEqual({
-
       2: {
         name: "Red Berry Blaster",
         brand: "Jim's Booches",
@@ -120,5 +118,4 @@ describe('kegListReducer', () => {
       }
     });
   });
-
 });
