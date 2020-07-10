@@ -14,7 +14,7 @@ describe("rootReducer", () => {
       masterKegList: {},
       formVisible: false,
       editing: false,
-      selectedKeg: ""
+      selectedKeg: null
     });
 
   });
