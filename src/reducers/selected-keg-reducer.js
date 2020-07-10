@@ -1,19 +1,17 @@
 import * as c from '../../src/actions/ActionTypes';
 
 export default (state = {}, action) => {
-  const { name, brand, price, flavor, capacity, howMuchLeft, id } = action;
+  const { id } = action;
   switch (action.type) {
     case c.SELECT_KEG:
+      console.log("hi");
       const newState = { ...state };
-      console.log(" ------ ");
-      console.log(newState);
-      console.log(id + "is getting deleted");
-      delete newState[id];
-      return newState;
-    // case c.PULL_KEG:
-    //   const pulledKegState = { ...state };
-    //   pulledKegState[id].capacity = pulledKegState[id].capacity - 1;
-    //   return pulledKegState;
+      const selectedKeg = newState[id];
+      return selectedKeg;
+    case c.DESELECT_KEG:
+      console.log("hi");
+      const thisState = {};
+      return thisState;
     default:
       return state;
   }

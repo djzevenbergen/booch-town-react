@@ -31,6 +31,8 @@ export default (state = {}, action) => {
       const pulledKegState = { ...state };
       pulledKegState[id].capacity = pulledKegState[id].capacity - 1;
       return pulledKegState;
+    case c.SELECT_KEG:
+      return state;
     default:
       return state;
   }

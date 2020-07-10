@@ -16,6 +16,11 @@ export const pullKeg = (id) => ({
   id: id
 });
 
+export const selectKeg = (id) => ({
+  type: 'SELECT_KEG',
+  id: id
+});
+
 export const addKeg = (keg) => {
   const { name, brand, price, flavor, capacity, howMuchLeft, id } = keg;
   return {
