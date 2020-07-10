@@ -15,7 +15,7 @@ describe("rootReducer", () => {
       masterKegList: {},
       formVisible: false,
       editing: false,
-      selectedKeg: {}
+      selectedKeg: ""
     });
 
   });
@@ -63,7 +63,7 @@ describe("rootReducer", () => {
     expect(store.getState().editing).toEqual(editingReducer(undefined, action));
   });
 
-  test('Check that initial state of kegListReducer matches root reducer', () => {
+  test('Check that initial root reducer passes back a keg id and state', () => {
     const currentState = {
       1: {
         name: "Red Berry Blaster",
@@ -92,7 +92,6 @@ describe("rootReducer", () => {
 
     store.dispatch(action);
     expect(store.getState().selectedKeg).toEqual(2);
-    expect(store.getState().masterKegList).toEqual(rootReducer(currentState.masterKegList, action));
   });
 
 });
