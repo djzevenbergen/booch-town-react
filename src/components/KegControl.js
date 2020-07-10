@@ -39,33 +39,45 @@ class KegControl extends React.Component {
 
   }
 
+  // handleClick = () => {
+  //   if (this.state.selectedKeg != null) {
+  //     this.setState({
+  //       formVisibleOnPage: false,
+  //       selectedKeg: null,
+  //       editing: false
+  //     });
+  //   } else if (this.props.formVisible === false) {
+  //     this.setState(prevState => ({
+  //       counter: prevState.counter + 1
+  //     }));
+  //   } else {
+  //     this.setState(prevState => ({
+  //       formVisibleOnPage: !prevState.formVisibleOnPage,
+  //       counter: 0
+  //     }));
+  //   }
+  // }
+
+
   handleClick = () => {
 
-    const { dispatch } = this.props;
-    const action = c.toggleForm();
-    const action2 = c.toggleEditForm();
+    if (this.state.selectedKeg !== null) {
 
-    if (this.state.selectedKeg != null) {
-
+      const { dispatch } = this.props;
+      const action = c.toggleEditForm();
       dispatch(action);
-      dispatch(action2);
-
+      console.log("handle click" + action);
       this.setState({
         selectedKeg: null
       });
 
-    } else if (this.props.formVisible === false) {
-      // this.setState(prevState => ({
-      //   counter: prevState.counter + 1
-      // }));
-      dispatch(action2);
+
     } else {
-      // this.setState(prevState => ({
-      //   formVisibleOnPage: !prevState.formVisibleOnPage,
-      //   counter: 0
-      // }));
+
+      const { dispatch } = this.props;
+      const action = c.toggleForm();
       dispatch(action);
-      dispatch(action2);
+      console.log("else:" + action.type);
     }
   }
 
@@ -93,24 +105,17 @@ class KegControl extends React.Component {
     const thisKeg = Object.values(this.props.masterKegList)
       .filter(keg => keg.id === id);
     const { dispatch } = this.props;
-    const action2 = c.toggleForm()
+    const action2 = c.pullKeg(id);
 
     if (thisKeg[0].capacity === 0) {
 
     } else if (thisKeg[0].capacity > 0 && thisKeg[0].capacity > 11) {
-      thisKeg[0].capacity -= 1;
-      // this.setState({ formVisible: false });
       dispatch(action2);
     } else if (thisKeg[0].capacity > 1 && thisKeg[0].capacity <= 11) {
-      thisKeg[0].capacity -= 1;
       thisKeg[0].howMuchLeft = "Not Much"
-      //this.setState({ formVisible: false });
       dispatch(action2);
     } else {
-      thisKeg[0].capacity -= 1;
       thisKeg[0].howMuchLeft = "None"
-
-      //this.setState({ formVisible: false });
       dispatch(action2);
     }
   }
@@ -141,6 +146,9 @@ class KegControl extends React.Component {
           onClickingDelete={this.handleDeletingKeg}
           onClickingEdit={this.handleEditClick}
         />
+      console.log(this.props.formVisible);
+      console.log(this.state.selectedKeg);
+      console.log(this.props.editing);
       buttonText = "Return to Keg List";
     } else if (this.props.formVisible === false) {
       console.log(this.props.masterKegList);
