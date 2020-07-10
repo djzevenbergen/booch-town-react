@@ -15,14 +15,17 @@ class KegControl extends React.Component {
     super(props);
     this.state = {
       // masterKegList: [],
-      formVisible: false,
-      selectedKeg: null,
-      editing: false
+      // formVisible: false,
+      selectedKeg: null
+      // editing: false
     };
   }
 
   handleChangingSelectedKeg = (id) => {
-    const selectedKeg = this.state.masterKegList.filter(keg => keg.id === id)[0];
+    const selectedKeg = Object.values(this.props.masterKegList).filter(keg => keg.id === id)[0];
+
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     this.setState({ selectedKeg: selectedKeg });
   }
 
@@ -37,25 +40,32 @@ class KegControl extends React.Component {
   }
 
   handleClick = () => {
+
+    const { dispatch } = this.props;
+    const action = c.toggleForm();
+    const action2 = c.toggleEditForm();
+
     if (this.state.selectedKeg != null) {
 
-      const { dispatch } = this.props;
-      const action = c.toggleEditForm();
       dispatch(action);
-      const action2 = c.toggleForm()
       dispatch(action2);
+
       this.setState({
-        formVisibleOnPage: false,
         selectedKeg: null
       });
-    } else if (this.state.formVisible === false) {
-      this.setState(prevState => ({
-        formVisible: true
-      }));
+
+    } else if (this.props.formVisible === false) {
+      // this.setState(prevState => ({
+      //   counter: prevState.counter + 1
+      // }));
+      dispatch(action2);
     } else {
-      this.setState(prevState => ({
-        formVisible: !prevState.formVisible
-      }));
+      // this.setState(prevState => ({
+      //   formVisibleOnPage: !prevState.formVisibleOnPage,
+      //   counter: 0
+      // }));
+      dispatch(action);
+      dispatch(action2);
     }
   }
 
@@ -80,29 +90,38 @@ class KegControl extends React.Component {
   }
 
   handlePullingPint = (id) => {
-    const thisKeg = this.state.masterKegList
-      .filter(keg => keg.id === id)
+    const thisKeg = Object.values(this.props.masterKegList)
+      .filter(keg => keg.id === id);
+    const { dispatch } = this.props;
+    const action2 = c.toggleForm()
+
     if (thisKeg[0].capacity === 0) {
 
     } else if (thisKeg[0].capacity > 0 && thisKeg[0].capacity > 11) {
       thisKeg[0].capacity -= 1;
-      this.setState({ formVisible: false });
+      // this.setState({ formVisible: false });
+      dispatch(action2);
     } else if (thisKeg[0].capacity > 1 && thisKeg[0].capacity <= 11) {
       thisKeg[0].capacity -= 1;
       thisKeg[0].howMuchLeft = "Not Much"
-      this.setState({ formVisible: false });
+      //this.setState({ formVisible: false });
+      dispatch(action2);
     } else {
       thisKeg[0].capacity -= 1;
       thisKeg[0].howMuchLeft = "None"
 
-      this.setState({ formVisible: false });
+      //this.setState({ formVisible: false });
+      dispatch(action2);
     }
   }
 
   handleDeletingKeg = (id) => {
-    const newMasterKegList = this.state.masterKegList.filter(keg => keg.id !== id);
+    const { dispatch } = this.props;
+    const action = c.deleteKeg(id);
+    dispatch(action);
+
+    //!!!!!!!!!!!!!!!!!!!!!!
     this.setState({
-      masterKegList: newMasterKegList,
       selectedKeg: null
     });
   }
@@ -111,7 +130,7 @@ class KegControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
 
-    if (this.state.editing) {
+    if (this.props.editing) {
       currentlyVisibleState = <EditKegForm keg={this.state.selectedKeg} onEditKeg={this.handleEditingKegInList} />
       buttonText = "Return to Keg List";
     }
@@ -123,7 +142,7 @@ class KegControl extends React.Component {
           onClickingEdit={this.handleEditClick}
         />
       buttonText = "Return to Keg List";
-    } else if (this.state.formVisible === false) {
+    } else if (this.props.formVisible === false) {
       console.log(this.props.masterKegList);
       currentlyVisibleState =
         <KegList
@@ -132,7 +151,7 @@ class KegControl extends React.Component {
           onClickingEditCapacity={this.handlePullingPint}
         />
       buttonText = "Add Keg!";
-    } else if (this.state.formVisible === true) {
+    } else if (this.props.formVisible === true) {
       currentlyVisibleState =
         <NewKegForm
           onNewKegCreation={this.handleAddingNewKegToList}
