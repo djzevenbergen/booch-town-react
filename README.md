@@ -1,11 +1,11 @@
 # _Kombucha Tap_
-#### _Epicodus Project July 3, 2020_
+#### _Epicodus Project July 10, 2020_
 
 #### By _**DJ Zevenbergen**_
 
 ## Description
 
-_An tap tracking app built in React.js that allows the user to enter and track kombucha taps. It allows the user to pull pints from individual taps and tracks each tap's capacity and fullness. It has color-coded prices._
+_An tap tracking app built in React.js that allows the user to enter and track kombucha taps. *It uses redux to manage state. It allows the user to pull pints from individual taps and tracks each tap's capacity and fullness. It has color-coded prices._
 
 
 ## Setup/Installation Requirements
@@ -28,6 +28,7 @@ _Have a bug or an issue with this application? [Open a new issue] here on GitHub
 
 * Javascript
 * React.js
+* Redux
 * NPM 
 
 
