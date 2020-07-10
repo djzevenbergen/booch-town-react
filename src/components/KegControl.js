@@ -122,26 +122,25 @@ class KegControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-
+    let thisSelectedKeg;
     console.log("checking this id!" + this.props.selectedKeg);
 
-    const thisSelectedKeg = Object.values(this.props.masterKegList)
+
+
+    thisSelectedKeg = Object.values(this.props.masterKegList)
       .filter(keg => keg.id === this.props.selectedKeg);
 
     console.log("master list!!" + this.props.masterKegList);
+
     if (this.props.editing) {
-      console.log("editing this keg:" + thisSelectedKeg);
-      console.log("editing = " + this.props.editing);
-      console.log("formVisible = " + this.props.formVisible);
 
-
-      currentlyVisibleState = <EditKegForm keg={thisSelectedKeg} onEditKeg={this.handleEditingKegInList} />
+      currentlyVisibleState = <EditKegForm keg={thisSelectedKeg[0]} onEditKeg={this.handleEditingKegInList} />
       buttonText = "Return to Keg List";
     }
     else if (this.props.selectedKeg != null) {
       currentlyVisibleState =
         <KegDetail
-          keg={thisSelectedKeg}
+          keg={thisSelectedKeg[0]}
           onClickingDelete={this.handleDeletingKeg}
           onClickingEdit={this.handleEditClick}
         />
@@ -150,7 +149,7 @@ class KegControl extends React.Component {
       console.log(this.props.editing);
       buttonText = "Return to Keg List";
     } else if (this.props.formVisible === false) {
-      console.log(this.props.masterKegList);
+      console.log(this.props.masterKegList[this.props.selectedKeg]);
       currentlyVisibleState =
         <KegList
           kegList={this.props.masterKegList}
