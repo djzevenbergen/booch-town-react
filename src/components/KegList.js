@@ -3,11 +3,11 @@ import Keg from './Keg';
 import PropTypes from "prop-types";
 
 function KegList(props) {
-
+  // if (Object.keys(props.kegList).length > 0) {
   return (
     <React.Fragment>
       <div id="keg-l" className="keg-list">
-        {props.kegList.map((keg) =>
+        {Object.values(props.kegList).map((keg) =>
           <Keg
             whenKegClicked={props.onKegSelection}
             onClickingEditCapacity={props.onClickingEditCapacity}
@@ -19,10 +19,20 @@ function KegList(props) {
             howMuchLeft={keg.howMuchLeft}
             id={keg.id}
             key={keg.id} />
-        )}
+        )
+        }
+
       </div>
     </React.Fragment>
   );
+  //}else {
+  //   return (
+  //     <React.Fragment>
+  //       <h3>No kegs yet!</h3>
+  //     </React.Fragment>
+  //   )
+  // }
+
 }
 
 KegList.propTypes = {

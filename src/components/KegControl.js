@@ -3,6 +3,10 @@ import NewKegForm from "./NewKegForm";
 import KegList from "./KegList";
 import KegDetail from "./KegDetail";
 import EditKegForm from './EditKegForm';
+import { connect } from 'react-redux';
+import PropTypes from "prop-types";
+import { findAllByTestId } from "@testing-library/react";
+import * as c from './../actions';
 
 
 class KegControl extends React.Component {
@@ -10,7 +14,7 @@ class KegControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      masterKegList: [],
+      // masterKegList: [],
       formVisible: false,
       selectedKeg: null,
       editing: false
@@ -24,19 +28,25 @@ class KegControl extends React.Component {
 
   handleAddingNewKegToList = (newKeg) => {
 
-    const newMasterKegList = this.state.masterKegList.concat(newKeg);
-    this.setState({
-      masterKegList: newMasterKegList,
-      formVisible: false
-    });
+    const { dispatch } = this.props;
+    const action = c.addKeg(newKeg);
+    dispatch(action);
+    const action2 = c.toggleForm();
+    dispatch(action2);
+
   }
 
   handleClick = () => {
     if (this.state.selectedKeg != null) {
+
+      const { dispatch } = this.props;
+      const action = c.toggleEditForm();
+      dispatch(action);
+      const action2 = c.toggleForm()
+      dispatch(action2);
       this.setState({
         formVisibleOnPage: false,
-        selectedKeg: null,
-        editing: false
+        selectedKeg: null
       });
     } else if (this.state.formVisible === false) {
       this.setState(prevState => ({
@@ -50,18 +60,23 @@ class KegControl extends React.Component {
   }
 
   handleEditingKegInList = (kegToEdit) => {
-    const editedMasterKegList = this.state.masterKegList
-      .filter(keg => keg.id !== this.state.selectedKeg.id)
-      .concat(kegToEdit);
+    const { dispatch } = this.props;
+
+    const action = c.addKeg(kegToEdit);
+    dispatch(action);
+
+    const action2 = c.toggleEditForm();
+    dispatch(action2);
+
     this.setState({
-      masterKegList: editedMasterKegList,
-      editing: false,
       selectedKeg: null
     });
   }
 
   handleEditClick = () => {
-    this.setState({ editing: true });
+    const { dispatch } = this.props;
+    const action = c.toggleEditForm();
+    dispatch(action);
   }
 
   handlePullingPint = (id) => {
@@ -109,9 +124,10 @@ class KegControl extends React.Component {
         />
       buttonText = "Return to Keg List";
     } else if (this.state.formVisible === false) {
+      console.log(this.props.masterKegList);
       currentlyVisibleState =
         <KegList
-          kegList={this.state.masterKegList}
+          kegList={this.props.masterKegList}
           onKegSelection={this.handleChangingSelectedKeg}
           onClickingEditCapacity={this.handlePullingPint}
         />
@@ -132,5 +148,22 @@ class KegControl extends React.Component {
     );
   }
 }
+
+KegControl.propTypes = {
+  masterKegList: PropTypes.object,
+  formVisible: PropTypes.bool,
+  editing: PropTypes.bool
+}
+
+const mapStateToProps = state => {
+  return {
+    masterKegList: state.masterKegList,
+    formVisible: state.formVisible,
+    editing: state.editing
+  }
+}
+
+KegControl = connect(mapStateToProps)(KegControl);
+
 
 export default KegControl;
