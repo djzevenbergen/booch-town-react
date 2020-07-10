@@ -32,15 +32,15 @@ describe('selectedKegReducer', () => {
     };
     expect(selectedKegReducer(currentState, action)).toEqual({
 
-      1: {
-        name: "Sour Silk",
-        brand: "Nature's Party-Planners",
-        price: "6.99",
-        flavor: "sour, lemon",
-        capacity: 9,
-        howMuchLeft: "Not Much",
-        id: 1
-      }
+
+      name: "Sour Silk",
+      brand: "Nature's Party-Planners",
+      price: "6.99",
+      flavor: "sour, lemon",
+      capacity: 9,
+      howMuchLeft: "Not Much",
+      id: 1
+
     });
   });
 });

@@ -7,6 +7,7 @@ export default (state = {}, action) => {
       console.log("hi");
       const newState = { ...state };
       const selectedKeg = newState[id];
+      console.log(selectedKeg);
       return selectedKeg;
     case c.DESELECT_KEG:
       console.log("hi");
