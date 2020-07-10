@@ -12,7 +12,7 @@ class KegControl extends React.Component {
     this.state = {
       formVisibleOnPage: false,
       masterKegList: [],
-      counter: 0,
+      formVisible: false,
       selectedKeg: null,
       editing: false
     };
@@ -28,7 +28,7 @@ class KegControl extends React.Component {
     const newMasterKegList = this.state.masterKegList.concat(newKeg);
     this.setState({
       masterKegList: newMasterKegList,
-      counter: 0
+      formVisible: false
     });
   }
 
@@ -39,14 +39,13 @@ class KegControl extends React.Component {
         selectedKeg: null,
         editing: false
       });
-    } else if (this.state.counter === 0) {
+    } else if (this.state.formVisible === false) {
       this.setState(prevState => ({
-        counter: prevState.counter + 1
+        formVisible: true
       }));
     } else {
       this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage,
-        counter: 0
+        formVisible: !prevState.formVisible
       }));
     }
   }
@@ -73,16 +72,16 @@ class KegControl extends React.Component {
 
     } else if (thisKeg[0].capacity > 0 && thisKeg[0].capacity > 11) {
       thisKeg[0].capacity -= 1;
-      this.setState({ counter: 0 });
+      this.setState({ formVisible: false });
     } else if (thisKeg[0].capacity > 1 && thisKeg[0].capacity <= 11) {
       thisKeg[0].capacity -= 1;
       thisKeg[0].howMuchLeft = "Not Much"
-      this.setState({ counter: 0 });
+      this.setState({ formVisible: false });
     } else {
       thisKeg[0].capacity -= 1;
       thisKeg[0].howMuchLeft = "None"
 
-      this.setState({ counter: 0 });
+      this.setState({ formVisible: false });
     }
   }
 
@@ -110,7 +109,7 @@ class KegControl extends React.Component {
           onClickingEdit={this.handleEditClick}
         />
       buttonText = "Return to Keg List";
-    } else if (this.state.counter === 0) {
+    } else if (this.state.formVisible === false) {
       currentlyVisibleState =
         <KegList
           kegList={this.state.masterKegList}
@@ -118,7 +117,7 @@ class KegControl extends React.Component {
           onClickingEditCapacity={this.handlePullingPint}
         />
       buttonText = "Add Keg!";
-    } else if (this.state.counter === 1) {
+    } else if (this.state.formVisible === true) {
       currentlyVisibleState =
         <NewKegForm
           onNewKegCreation={this.handleAddingNewKegToList}
