@@ -3,7 +3,6 @@ import Keg from './Keg';
 import PropTypes from "prop-types";
 
 function KegList(props) {
-  // if (Object.keys(props.kegList).length > 0) {
   return (
     <React.Fragment>
       <div id="keg-l" className="keg-list">
@@ -25,14 +24,6 @@ function KegList(props) {
       </div>
     </React.Fragment>
   );
-  //}else {
-  //   return (
-  //     <React.Fragment>
-  //       <h3>No kegs yet!</h3>
-  //     </React.Fragment>
-  //   )
-  // }
-
 }
 
 KegList.propTypes = {

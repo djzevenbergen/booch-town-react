@@ -4,7 +4,6 @@ import editingReducer from './editing-reducer';
 import selectedKegReducer from './selected-keg-reducer';
 import { combineReducers } from 'redux';
 
-
 const rootReducer = combineReducers(
   {
     formVisible: formVisibleReducer,

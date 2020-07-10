@@ -1,5 +1,4 @@
 import selectedKegReducer from '../../reducers/selected-keg-reducer';
-//import * as c from '../../actions/ActionTypes';
 import * as c from '../../actions/ActionTypes';
 
 let action;

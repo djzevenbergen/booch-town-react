@@ -5,7 +5,6 @@ import KegDetail from "./KegDetail";
 import EditKegForm from './EditKegForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import { findAllByTestId } from "@testing-library/react";
 import * as c from './../actions';
 
 
@@ -14,10 +13,6 @@ class KegControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // masterKegList: [],
-      // formVisible: false,
-      // selectedKeg: null
-      // editing: false
     };
   }
 
@@ -25,9 +20,6 @@ class KegControl extends React.Component {
     const { dispatch } = this.props;
     const action = c.selectKeg(id);
     dispatch(action);
-    console.log("am i happening");
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 
   handleAddingNewKegToList = (newKeg) => {
@@ -51,11 +43,9 @@ class KegControl extends React.Component {
       }
 
       const action2 = c.deselectKeg();
-      console.log(this.props.selectedKeg);
       dispatch(action2);
 
     } else {
-      console.log('wtf');
       const { dispatch } = this.props;
       const action2 = c.toggleEditForm();
       if (this.props.editing === true) {
@@ -64,7 +54,6 @@ class KegControl extends React.Component {
       // 
       const action = c.toggleForm();
       dispatch(action);
-      // console.log("else:" + action.type);
     }
   }
 
@@ -113,24 +102,15 @@ class KegControl extends React.Component {
 
     const action2 = c.deselectKeg();
     dispatch(action2);
-    //!!!!!!!!!!!!!!!!!!!!!!
-    // this.setState({
-    //   selectedKeg: null
-    // });
   }
 
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
     let thisSelectedKeg;
-    console.log("checking this id!" + this.props.selectedKeg);
-
-
 
     thisSelectedKeg = Object.values(this.props.masterKegList)
       .filter(keg => keg.id === this.props.selectedKeg);
-
-    console.log("master list!!" + this.props.masterKegList);
 
     if (this.props.editing) {
 
@@ -144,12 +124,8 @@ class KegControl extends React.Component {
           onClickingDelete={this.handleDeletingKeg}
           onClickingEdit={this.handleEditClick}
         />
-      console.log(this.props.formVisible);
-      console.log(thisSelectedKeg);
-      console.log(this.props.editing);
       buttonText = "Return to Keg List";
     } else if (this.props.formVisible === false) {
-      console.log(this.props.masterKegList[this.props.selectedKeg]);
       currentlyVisibleState =
         <KegList
           kegList={this.props.masterKegList}
@@ -191,6 +167,5 @@ const mapStateToProps = state => {
 }
 
 KegControl = connect(mapStateToProps)(KegControl);
-
 
 export default KegControl;
