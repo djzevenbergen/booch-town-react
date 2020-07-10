@@ -13,7 +13,7 @@ function NewKegForm(props) {
   );
   function handleNewKegFormSubmission(event) {
     event.preventDefault();
-    props.onNewKegCreation({ name: event.target.name.value, brand: event.target.brand.value, price: event.target.price.value, flavor: event.target.flavor.value, capacity: event.target.capacity.value, howMuchLeft: event.target.howMuchLeft.value, id: v4() });
+    props.onNewKegCreation({ name: event.target.name.value, brand: event.target.brand.value, price: event.target.price.value, flavor: event.target.flavor.value, capacity: parseInt(event.target.capacity.value), howMuchLeft: event.target.howMuchLeft.value, id: v4() });
   }
 }
 NewKegForm.propTypes = {

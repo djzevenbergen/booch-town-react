@@ -28,9 +28,10 @@ function ReusableForm(props) {
           name='howMuchLeft'
           value='Plenty-o-Booch' />
         <input
-          type='hidden'
+          type='number'
           name='capacity'
-          value='124' />
+          placeholder='124'
+          min="0" />
         <button type='submit'>{props.buttonText}</button>
       </form>
     </React.Fragment >
