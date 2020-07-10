@@ -11,7 +11,7 @@ export const toggleEditForm = () => ({
   type: 'TOGGLE_EDIT_FORM'
 });
 
-export const downvoteKeg = () => ({
+export const pullKeg = () => ({
   type: 'PULL_KEG'
 });
 
