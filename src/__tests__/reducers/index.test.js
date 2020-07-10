@@ -91,8 +91,8 @@ describe("rootReducer", () => {
     console.log(action);
 
     store.dispatch(action);
-    expect(store.getState().selectedKeg).toEqual(rootReducer(currentState, action))
-    expect(store.getState().masterKegList).toEqual(rootReducer(currentState, action));
+    expect(store.getState().selectedKeg).toEqual(2);
+    expect(store.getState().masterKegList).toEqual(rootReducer(currentState.masterKegList, action));
   });
 
 });

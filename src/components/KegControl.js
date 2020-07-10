@@ -197,7 +197,7 @@ const mapStateToProps = state => {
     masterKegList: state.masterKegList,
     formVisible: state.formVisible,
     editing: state.editing,
-    selectedKeg: state.selectedKeg
+    selectedKeg: state.masterKegList
   }
 }
 
