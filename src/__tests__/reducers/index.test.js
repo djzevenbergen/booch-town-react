@@ -59,34 +59,61 @@ describe("rootReducer", () => {
   });
 
   test('Check that initial root reducer passes back a keg id and state', () => {
-    const currentState = {
-      1: {
+    // const currentState = {
+    //   1: {
+    //     name: "Red Berry Blaster",
+    //     brand: "Jim's Booches",
+    //     price: "4.00",
+    //     flavor: "cherry",
+    //     capacity: 124,
+    //     howMuchLeft: "Plenty-o-Booch",
+    //     id: 1
+    //   },
+    //   2: {
+    //     name: "Sour Silk",
+    //     brand: "Nature's Party-Planners",
+    //     price: "6.99",
+    //     flavor: "sour, lemon",
+    //     capacity: 9,
+    //     howMuchLeft: "Not Much",
+    //     id: 2
+    //   }
+    // }
+    const action = c.selectKeg(2);
+    store.dispatch(action);
+    expect(store.getState().selectedKeg).toEqual(2);
+  });
+
+  test('Check that initial root reducer passes back a keg id and state', () => {
+
+    // const action1 = {
+    //   type: 'ADD_KEG',
+    //   name: "Red Berry Blaster",
+    //   brand: "Jim's Booches",
+    //   price: "4.00",
+    //   flavor: "cherry",
+    //   capacity: 124,
+    //   howMuchLeft: "Plenty-o-Booch",
+    //   id: 1
+    // }
+
+    // store.dispatch(action1);
+
+    const postPullState = {
+      2: {
         name: "Red Berry Blaster",
         brand: "Jim's Booches",
         price: "4.00",
         flavor: "cherry",
-        capacity: 124,
+        capacity: 123,
         howMuchLeft: "Plenty-o-Booch",
-        id: 1
-      },
-      2: {
-
-        name: "Sour Silk",
-        brand: "Nature's Party-Planners",
-        price: "6.99",
-        flavor: "sour, lemon",
-        capacity: 9,
-        howMuchLeft: "Not Much",
         id: 2
       }
     }
 
-    const action = c.selectKeg(2);
-
-    console.log(action);
-
+    const action = c.pullKeg(2);
     store.dispatch(action);
-    expect(store.getState().selectedKeg).toEqual(2);
+    expect(store.getState().masterKegList).toEqual(postPullState);
   });
 
 });
